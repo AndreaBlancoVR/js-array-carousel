@@ -23,6 +23,7 @@ const text = [
     'Et temporibus voluptatum suscipit tempore aliquid deleniti aut veniam inventore eligendi ex ad ullam,',
 ]
 
+// CREO TUTTE LE VARIABILI NON DINAMICHE (E ANCHE QUALCUNA DI QUELLE DINAMICHE)
 
 const MAIN_SECTION = document.getElementById('main-section');
 
@@ -82,6 +83,7 @@ let currentIndex = 0
 for(let i = 0; i < items.length; i++) {
     const liElement = document.createElement('li');
     UL.append(liElement);
+    liElement.classList.add('active')
 
     let overlay = document.createElement('div')
     overlay.classList.add('item-overlay');
@@ -91,15 +93,24 @@ for(let i = 0; i < items.length; i++) {
 
     if(i > 0 ) {
         liElement.append(overlay);
-    }
+        liElement.classList.remove('active')
 
-    
+    }
 
     const imgElement = document.createElement('img');
     imgContElement.append(imgElement);
     imgElement.src = items[i];
 
     MAIN_IMG.src = items[0];
-    IMG_TITLE.append(title[0]);
-    IMG_CAPTION.append(text[0]);  
+    IMG_TITLE.innerHTML = ( title[0] );
+    IMG_CAPTION.innerHTML = ( text[0] );  
 }
+
+// DOWN_ARROW.addEventListener('click', function() {
+
+//     if(currentIndex < items.length - 1) {
+//         liElement[currentIndex].classList.remove('active')
+//         currentIndex++
+//         liElement[currentIndex + 1].classList.add('active')
+//     } 
+//} )
