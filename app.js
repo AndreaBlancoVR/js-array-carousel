@@ -77,40 +77,77 @@ DOWN_ARROW.classList.add('down-arrow');
 DOWN_ARROW.innerHTML = ('GIU\'')
 ARROWS.append(DOWN_ARROW);
 
+
+const liArr = []
+const overlayArr = []
+
 let currentIndex = 0
+let activeIndex = 0
+
 
 
 for(let i = 0; i < items.length; i++) {
+    //creo gli li e li pusho in un array
     const liElement = document.createElement('li');
+    liArr.push(liElement);
     UL.append(liElement);
-    liElement.classList.add('active')
-
+    
+    //creo gli overlay
     let overlay = document.createElement('div')
+    overlayArr.push(overlay)
+    liElement.append(overlay);
     overlay.classList.add('item-overlay');
     
+    //creo il contenitore delle thumb
     const imgContElement = document.createElement('div');
+    imgContElement.classList.add('img-container');
     liElement.append(imgContElement);
 
-    if(i > 0 ) {
-        liElement.append(overlay);
-        liElement.classList.remove('active')
+    // if(i > 0 ) {
+    //     liArr.append(overlay);
+    //     liarr[activeIndex].classList.add('active')
 
-    }
-
+    // }
+    // inserisco le immagini nelle thumb
     const imgElement = document.createElement('img');
     imgContElement.append(imgElement);
-    imgElement.src = items[i];
-
-    MAIN_IMG.src = items[0];
-    IMG_TITLE.innerHTML = ( title[0] );
-    IMG_CAPTION.innerHTML = ( text[0] );  
+    imgElement.src = items[i]; 
 }
 
-// DOWN_ARROW.addEventListener('click', function() {
+// Assegno/rimuovo le classi "dimaniche"
+liArr[activeIndex].classList.add('active')
+overlayArr[activeIndex].classList.remove('item-overlay')
 
-//     if(currentIndex < items.length - 1) {
-//         liElement[currentIndex].classList.remove('active')
-//         currentIndex++
-//         liElement[currentIndex + 1].classList.add('active')
-//     } 
-//} )
+// inserisco immagine titolo e didascalia
+MAIN_IMG.src = items[activeIndex];
+IMG_TITLE.innerHTML = ( title[activeIndex] );
+IMG_CAPTION.innerHTML = ( text[activeIndex] ); 
+
+
+DOWN_ARROW.addEventListener('click', function() {
+
+    if(activeIndex < items.length - 1) {
+         liArr[activeIndex].classList.remove('active')
+         overlayArr[activeIndex].classList.add('item-overlay')
+         activeIndex++
+         liArr[activeIndex].classList.add('active')
+         overlayArr[activeIndex].classList.remove('item-overlay')
+         MAIN_IMG.src = items[activeIndex];
+        IMG_TITLE.innerHTML = ( title[activeIndex] );
+        IMG_CAPTION.innerHTML = ( text[activeIndex] );
+    } 
+} )
+
+UP_ARROW.addEventListener('click', function() {
+
+    if(activeIndex > 0) {
+         liArr[activeIndex].classList.remove('active')
+         overlayArr[activeIndex].classList.add('item-overlay')
+         activeIndex--
+         liArr[activeIndex].classList.add('active')
+         overlayArr[activeIndex].classList.remove('item-overlay')
+         MAIN_IMG.src = items[activeIndex];
+        IMG_TITLE.innerHTML = ( title[activeIndex] );
+        IMG_CAPTION.innerHTML = ( text[activeIndex] );
+    } 
+} )
